@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0c0e0d">
+<title>Zona Hostil · Jogar</title>
+<link rel="icon" href="img/icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Saira:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/jogo.css">
+</head>
+<body>
+<div id="game"></div>
+
+<!-- ===================== HUD ===================== -->
+<div id="hud" hidden>
+  <div id="vignette"></div><div id="dmgflash"></div>
+  <div id="scope" hidden><div class="scope-ring"></div><i class="sh"></i><i class="sv"></i></div>
+  <div id="tags"></div>
+  <div id="topleft">
+    <canvas id="mini" width="208" height="208"></canvas>
+    <div id="hpwrap"><div id="hpbar"><i id="hpfill"></i></div><span id="hpnum" class="tab">100</span></div>
+    <div id="netinfo" class="tab"></div>
+  </div>
+  <div id="sbar" class="tab"></div>
+  <div id="topright">
+    <div id="ammo" class="tab"><b id="mag">30</b><span>/</span><em id="res">120</em></div>
+    <div id="wname">FUZIL M7</div>
+    <div id="equip" class="tab"><span id="nades">● ●</span><span id="streak"></span></div>
+    <div id="feed"></div>
+  </div>
+  <div id="cross"><i></i><i></i><i></i><i></i></div>
+  <div id="hitm"><i></i><i></i><i></i><i></i></div>
+  <div id="dirs"></div>
+  <div id="banner"><small id="bsub"></small><strong id="btitle"></strong></div>
+  <div id="pops"></div>
+  <div id="reloadHint">RECARREGANDO</div>
+  <div id="roomcode" hidden></div>
+</div>
+
+<!-- ===================== TOQUE ===================== -->
+<div id="touch" hidden>
+  <div id="joyBase"><div id="joyKnob"></div></div>
+  <button id="bFireL" class="tb fire" aria-label="Atirar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></button>
+  <button id="bFire" class="tb fire" aria-label="Atirar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></button>
+  <button id="bAds" class="tb" aria-label="Mirar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button>
+  <button id="bJump" class="tb" aria-label="Pular"><svg viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg></button>
+  <button id="bCrouch" class="tb" aria-label="Agachar"><svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/><path d="M5 20h14"/></svg></button>
+  <button id="bRel" class="tb" aria-label="Recarregar"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg></button>
+  <button id="bSwap" class="tb" aria-label="Trocar arma"><svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></button>
+  <button id="bNade" class="tb" aria-label="Granada"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="6"/><path d="M12 8V5h4"/></svg></button>
+  <button id="bMelee" class="tb" aria-label="Faca"><svg viewBox="0 0 24 24"><path d="M4 20l6-6M10 14l9-9 1 4-7 7z"/></svg></button>
+  <button id="bBoard" class="tb small" aria-label="Placar"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14"/></svg></button>
+  <button id="bPause" class="tb small" aria-label="Pausar"><svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg></button>
+</div>
+
+<!-- ===================== PLACAR ===================== -->
+<div id="board" class="overlay" hidden><div class="boardwrap" id="boardInner"></div></div>
+
+<!-- ===================== MORTE ===================== -->
+<div id="death" class="overlay death" hidden>
+  <div class="deathbox">
+    <div class="eyebrow">ELIMINADO POR</div>
+    <div class="killer" id="dKiller">—</div>
+    <div class="meta" id="dWeapon"></div>
+    <div class="respawn tab" id="dTimer"></div>
+    <div class="oplabel">PRÓXIMA ARMA</div>
+    <div class="chips" id="dLoadout"></div>
+  </div>
+</div>
+
+<!-- ===================== FIM DE PARTIDA ===================== -->
+<div id="end" class="screen" hidden>
+  <div class="panel wide">
+    <div class="eyebrow" id="eSub">FIM DE PARTIDA</div>
+    <h2 class="title" id="eTitle">VITÓRIA</h2>
+    <div id="eBoard"></div>
+    <div class="row"><span class="meta tab" id="eNext"></span><button class="btn ghost" id="eQuit"><span>SAIR PARA O MENU</span></button></div>
+  </div>
+</div>
+
+<!-- ===================== MENU ===================== -->
+<div id="menu" class="screen">
+  <div class="panel">
+    <a class="back" href="./">‹ PÁGINA INICIAL</a>
+    <h1 class="title">ZONA<br><span>HOSTIL</span></h1>
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn on" data-tab="jogar" role="tab">JOGAR</button>
+      <button class="tab-btn" data-tab="soldado" role="tab">SOLDADO</button>
+      <button class="tab-btn" data-tab="ajustes" role="tab">AJUSTES</button>
+      <button class="tab-btn" data-tab="ranking" role="tab">RANKING</button>
+    </nav>
+
+    <section class="tabp" data-p="jogar">
+      <div class="oplabel">ONLINE · PARTIDA RÁPIDA <span id="srvState" class="srv"></span></div>
+      <div class="modes" id="quickModes"></div>
+      <div class="oplabel">SALA PRIVADA COM AMIGOS</div>
+      <div class="row">
+        <select id="pvMode" class="field"><option value="tdm">Mata-mata em equipe</option><option value="ffa">Todos contra todos</option><option value="surv">Sobrevivência co-op</option></select>
+        <label class="check"><input type="checkbox" id="pvBots" checked> Completar com bots</label>
+        <button class="btn sm" id="pvCreate"><span>CRIAR SALA</span></button>
+      </div>
+      <div class="row">
+        <input id="pvCode" class="field code" maxlength="4" placeholder="CÓDIGO" autocomplete="off" autocapitalize="characters" spellcheck="false">
+        <button class="btn sm ghost" id="pvJoin"><span>ENTRAR</span></button>
+      </div>
+      <div class="oplabel">OFFLINE · TREINO CONTRA BOTS</div>
+      <div class="row">
+        <select id="trMode" class="field"><option value="tdm">Mata-mata em equipe</option><option value="ffa">Todos contra todos</option><option value="surv">Sobrevivência</option></select>
+        <button class="btn sm ghost" id="trStart"><span>TREINAR</span></button>
+      </div>
+      <div class="keys" id="keys"></div>
+    </section>
+
+    <section class="tabp" data-p="soldado" hidden>
+      <label class="oplabel" for="cfgName">CODINOME</label>
+      <input id="cfgName" class="field" maxlength="16" placeholder="Seu nome no jogo" autocomplete="nickname">
+      <div class="oplabel">OPERADOR</div>
+      <div class="chips" id="opClass"></div>
+      <div class="chips" id="opSex"><button class="chip" data-f="0">MASCULINO</button><button class="chip" data-f="1">FEMININO</button></div>
+      <p class="opdesc" id="opDesc"></p>
+      <div class="oplabel">ARMA PRINCIPAL <small>· SECUNDÁRIA: PISTOLA P9 · 2 GRANADAS · FACA</small></div>
+      <div class="chips" id="opWeapon"></div>
+      <div id="wStats"></div>
+    </section>
+
+    <section class="tabp" data-p="ajustes" hidden>
+      <div class="set"><label for="sSensH">Sensibilidade horizontal</label><input type="range" id="sSensH" min="0.3" max="2.5" step="0.05"><output id="oSensH"></output></div>
+      <div class="set"><label for="sSensV">Sensibilidade vertical</label><input type="range" id="sSensV" min="0.3" max="2.5" step="0.05"><output id="oSensV"></output></div>
+      <div class="set"><label for="sFov">Campo de visão</label><input type="range" id="sFov" min="60" max="95" step="1"><output id="oFov"></output></div>
+      <div class="set"><label for="sVol">Volume</label><input type="range" id="sVol" min="0" max="1" step="0.05"><output id="oVol"></output></div>
+      <div class="set"><label for="sBtn">Tamanho dos botões (toque)</label><input type="range" id="sBtn" min="0.75" max="1.35" step="0.05"><output id="oBtn"></output></div>
+      <div class="set"><label for="sQual">Gráficos</label><select id="sQual" class="field"><option value="low">Baixo (mais FPS)</option><option value="med">Médio</option><option value="high">Alto</option></select></div>
+      <label class="check"><input type="checkbox" id="sInv"> Inverter eixo vertical</label>
+      <label class="check"><input type="checkbox" id="sAssist"> Assistência de mira no toque</label>
+    </section>
+
+    <section class="tabp" data-p="ranking" hidden>
+      <p class="opdesc">Maiores eliminadores do servidor desde a última reinicialização.</p>
+      <div id="rankList" class="rank"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================== PAUSA ===================== -->
+<div id="pause" class="screen" hidden>
+  <div class="panel">
+    <div class="eyebrow" id="pSub">JOGO PAUSADO</div>
+    <h2 class="title">EM<br><span>ESPERA</span></h2>
+    <p class="opdesc" id="pInfo"></p>
+    <div class="row"><button id="resume" class="btn"><span>CONTINUAR</span></button><button id="quit" class="btn ghost"><span>SAIR DA PARTIDA</span></button></div>
+  </div>
+</div>
+
+<div id="loading" class="screen" hidden><div class="panel"><div class="eyebrow">CONECTANDO</div><div class="title sm" id="lText">ENTRANDO NA ZONA…</div></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/three.min.js"></script>
+<script src="js/shared.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/assets.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

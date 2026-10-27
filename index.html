@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0e0d">
+<title>Zona Hostil</title>
+<meta name="description" content="FPS tático 3D que roda direto no navegador. Multiplayer online, salas com amigos, bots e modo sobrevivência. No celular ou no PC, sem instalar nada.">
+<meta property="og:title" content="Zona Hostil — FPS 3D no navegador">
+<meta property="og:description" content="Multiplayer online, salas com amigos e sobrevivência co-op. Jogue grátis no celular ou no PC.">
+<link rel="icon" href="img/icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,500;0,700;0,800;1,800&family=Saira:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="./"><img src="img/icone.svg" alt="" width="28" height="28"><span>ZONA <b>HOSTIL</b></span></a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#modos">Modos</a><a href="#arsenal">Arsenal</a><a href="#operadores">Operadores</a><a href="#edicoes">Edições</a><a href="#faq">Dúvidas</a>
+    </nav>
+    <a class="btn sm" href="jogar.html"><span>JOGAR GRÁTIS</span></a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="topo">
+    <div id="hero3d" aria-hidden="true"></div>
+    <div class="wrap hero-in">
+      <div class="live" id="live"><i></i><span>Conectando ao servidor…</span></div>
+      <h1 class="h1">SEGURE<br>O <span>PÁTIO.</span></h1>
+      <p class="lede">FPS tático em 3D que roda direto no navegador. Monte o esquadrão, chame os amigos com um código de sala e dispute o Pátio 07 no celular ou no PC, sem baixar nada.</p>
+      <div class="ctas">
+        <a class="btn" href="jogar.html"><span>JOGAR AGORA</span></a>
+        <a class="btn ghost" href="#edicoes"><span>VER EDIÇÕES</span></a>
+      </div>
+      <dl class="facts">
+        <div><dt>MODOS</dt><dd>3</dd></div>
+        <div><dt>ARMAS</dt><dd>5</dd></div>
+        <div><dt>OPERADORES</dt><dd>5</dd></div>
+        <div><dt>DOWNLOAD</dt><dd>0 MB</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- MODOS -->
+  <section class="sec" id="modos">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">MODOS DE JOGO</span><h2 class="h2">Escolha como você quer cair.</h2></div>
+      <div class="modes">
+        <article class="mode">
+          <span class="tagline">EQUIPES · 4 × 4</span>
+          <h3>Mata-mata em equipe</h3>
+          <p>Águia contra Cobra. A primeira equipe a somar 40 baixas leva a partida. Bots completam os times enquanto o servidor enche.</p>
+          <ul><li>Limite de 8 minutos</li><li>Drone de reconhecimento com 3 baixas seguidas</li></ul>
+        </article>
+        <article class="mode">
+          <span class="tagline">TODOS CONTRA TODOS</span>
+          <h3>Cada um por si</h3>
+          <p>Ninguém cobre suas costas. Quem chegar primeiro a 25 baixas vence. Ideal para treinar mira e movimentação.</p>
+          <ul><li>Nascimento longe dos inimigos</li><li>Proteção de 1,5 s ao renascer</li></ul>
+        </article>
+        <article class="mode">
+          <span class="tagline">CO-OP · ONDAS</span>
+          <h3>Sobrevivência</h3>
+          <p>Você e os amigos contra ondas de hostis cada vez mais fortes. Caiu? Volta quando a onda acabar. Todos caíram? Fim da linha.</p>
+          <ul><li>Uma classe inimiga nova por onda</li><li>Munição reposta entre ondas</li></ul>
+        </article>
+        <article class="mode alt">
+          <span class="tagline">SALA PRIVADA</span>
+          <h3>Jogue com os amigos</h3>
+          <p>Crie uma sala, passe o código de 4 letras e pronto. Escolha o modo e se os bots entram ou não.</p>
+          <div class="codebox" aria-hidden="true"><span>K</span><span>7</span><span>R</span><span>Q</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARSENAL -->
+  <section class="sec dark" id="arsenal">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">ARSENAL</span><h2 class="h2">Cinco armas. Nenhuma é a resposta certa.</h2><p class="sub">Números reais do jogo. O servidor valida cada disparo, então o que está aqui é o que vale na partida.</p></div>
+      <div class="arsenal" id="arsenalList"></div>
+      <p class="note">Toda classe leva também 2 granadas de fragmentação e faca para corpo a corpo.</p>
+    </div>
+  </section>
+
+  <!-- OPERADORES -->
+  <section class="sec" id="operadores">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">OPERADORES</span><h2 class="h2">Escolha quem entra em campo.</h2><p class="sub">Cada operador tem equipamento próprio, versões masculina e feminina e um estilo que os bots também seguem.</p></div>
+      <div class="ops" id="opsList"></div>
+    </div>
+  </section>
+
+  <!-- COMO JOGAR -->
+  <section class="sec dark" id="controles">
+    <div class="wrap two">
+      <div class="head"><span class="eyebrow">CONTROLES</span><h2 class="h2">Feito para o polegar. Bom no mouse.</h2><p class="sub">No celular, o joystick aparece onde você toca. Arraste na metade direita para mirar. Botões de tamanho ajustável.</p></div>
+      <div class="ctrl">
+        <div><h3>CELULAR</h3><ul><li><b>Joystick</b> mover · até o fim para correr</li><li><b>Arrastar à direita</b> mirar</li><li><b>Botões</b> atirar, mira, agachar, pular, granada, faca, trocar, recarregar</li><li><b>Assistência de mira</b> opcional</li></ul></div>
+        <div><h3>PC</h3><ul><li><b>WASD</b> mover · <b>Shift</b> correr</li><li><b>Mouse</b> mirar · clique atira · botão direito mira</li><li><b>R</b> recarregar · <b>Q</b> trocar · <b>C</b> agachar</li><li><b>G</b> granada · <b>V</b> faca · <b>Tab</b> placar</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIÇÕES -->
+  <section class="sec" id="edicoes">
+    <div class="wrap">
+      <div class="head center"><span class="eyebrow">EDIÇÕES · PRÉ-VENDA</span><h2 class="h2">Jogue grátis. Apoie se curtir.</h2><p class="sub">O jogo completo é grátis. As edições pagas trazem cosméticos e financiam os próximos mapas.</p></div>
+      <div class="eds" id="edList"></div>
+      <p class="note center" id="edNote"></p>
+    </div>
+  </section>
+
+  <!-- RANKING -->
+  <section class="sec dark" id="ranking">
+    <div class="wrap two">
+      <div class="head"><span class="eyebrow">RANKING AO VIVO</span><h2 class="h2">Quem está mandando no Pátio.</h2><p class="sub">Baixas registradas pelo servidor desde a última reinicialização.</p><a class="btn ghost sm" href="jogar.html"><span>ENTRAR NO RANKING</span></a></div>
+      <ol class="rank" id="rankList"><li class="empty">Carregando…</li></ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="wrap narrow">
+      <div class="head"><span class="eyebrow">DÚVIDAS</span><h2 class="h2">Perguntas frequentes</h2></div>
+      <details><summary>É grátis mesmo?</summary><p>Sim. Todos os modos, armas e operadores são grátis. As edições Veterano e Fundador são opcionais e trazem só itens cosméticos.</p></details>
+      <details><summary>Precisa instalar alguma coisa?</summary><p>Não. Abra o link no Chrome, Safari, Edge ou Firefox e jogue. Funciona no celular, tablet e computador.</p></details>
+      <details><summary>Como jogo com meus amigos?</summary><p>Em JOGAR, toque em CRIAR SALA. O jogo mostra um código de 4 letras. Seus amigos digitam o código em ENTRAR e caem na mesma partida.</p></details>
+      <details><summary>Meu celular aguenta?</summary><p>Em AJUSTES, escolha Gráficos: Baixo para ganhar desempenho. Recomendamos jogar com o celular na horizontal.</p></details>
+      <details><summary>Dá para jogar sem internet?</summary><p>Sim, o Treino contra bots roda no próprio aparelho. O multiplayer online precisa de conexão.</p></details>
+      <details><summary>Tem trapaça?</summary><p>O servidor confere movimento, cadência de tiro, munição, recarga e acertos. Tiros impossíveis ou teletransporte são recusados.</p></details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap final-in">
+      <h2 class="h1 sm">A ZONA ESTÁ <span>ABERTA.</span></h2>
+      <a class="btn" href="jogar.html"><span>JOGAR AGORA</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap footrow">
+    <span>© <span id="yr"></span> Zona Hostil · projeto independente</span>
+    <span>Não afiliado a nenhuma outra franquia de jogos.</span>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/shared.js"></script>
+<script src="vendor/three.min.js"></script>
+<script src="js/assets.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
